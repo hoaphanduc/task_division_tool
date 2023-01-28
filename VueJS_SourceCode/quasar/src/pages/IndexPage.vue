@@ -3,7 +3,7 @@
     <q-form @submit.prevent="onSubmit" class="rounded q-my-lg flex column">
       <q-input
         outlined
-        v-model="form.projectName"
+        v-model="form.title"
         class="full-width q-pb-lg"
         label="Project Name"
         :rules="[
@@ -18,7 +18,7 @@
           formatModel="string"
           format="YYYY-MM-DD"
           class="q-pb-lg q-mr-sm col"
-          v-model="form.startDate"
+          v-model="form.start_date"
           outlined
           type="date"
           stack-label
@@ -31,7 +31,7 @@
           formatModel="string"
           format="YYYY-MM-DD"
           class="q-pb-lg col"
-          v-model="form.endDate"
+          v-model="form.end_date"
           outlined
           type="date"
           stack-label
@@ -45,11 +45,11 @@
         v-model="form.status"
         :options="optionsStatus"
         label="Status"
-        :rules="[(val) => (val && val.length > 0) || 'Start is required']"
+        :rules="[(val) => (val.label && val.label.length > 0) || 'Start is required']"
       />
       <q-input
         outlined
-        v-model="form.requestNumber"
+        v-model="form.numberofrequest"
         class="full-width q-pb-lg"
         label="Request Number"
         :rules="[
@@ -83,20 +83,34 @@ export default defineComponent({
   data() {
     return {
       form: {
-        projectName: "",
-        startDate: "",
-        endDate: "",
+        title: "",
+        start_date: "",
+        end_date: "",
         status: "",
-        requestNumber: "",
+        numberofrequest: "",
         note: "",
       },
-      optionsStatus: ["In progress", "Pending", "Done"],
+      optionsStatus: [{
+        label: "On Progress",
+        value: 2,
+      },
+      {
+        label: "Done",
+        value: 0,
+      },
+      {
+        label: "Pending",
+        value: 1,
+      }],
     };
   },
   methods: {
     onSubmit() {
       axios
-        .post("http://localhost:3000/projects", this.form)
+        .post("http://localhost:8000/api/addtask/", {
+          ...this.form,
+          status: this.form.status.value,
+        })
         .then(() => {
           this.form = "";
         })

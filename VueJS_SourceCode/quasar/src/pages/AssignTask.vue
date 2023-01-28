@@ -4,12 +4,13 @@
         <q-select
           outlined
           v-model="form.projectName"
+          :options="optionProject"
           class="full-width q-pb-lg"
           label="Project Name"
           :rules="[
-            (val) => (val && val.length > 0) || 'Project Name is required',
-            (val) =>
-              (val && val.length <= 30) ||
+            (val) => (val.label && val.label.length > 0) || 'Project Name is required',
+            (val) => 
+              (val.label && val.label.length <= 30) ||
               'Project name cannot be longer than 30 characters.',
           ]"
         />
@@ -19,7 +20,7 @@
         v-model="form.pic"
         :options="optionsPic"
         label="PIC"
-        :rules="[(val) => (val && val.length > 0) || 'PIC is required']"
+        :rules="[(val) => val || 'PIC is required']"
       />
       <q-input
         v-model="form.note"
@@ -42,6 +43,8 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 
+const HOST = "http://localhost:8000/api/";
+
 export default defineComponent({
   name: "defineComponent",
   data() {
@@ -55,30 +58,43 @@ export default defineComponent({
   },
   methods: {
     async getProject(){
-      const projects = await axios.get("http://localhost:3000/projects")
+      const projects = await axios.get(HOST + "projects/?format=json")
       this.optionProject = projects.data.map((item) => {
-        return item.name;
+        return {
+          label: item.title,
+          value: item.id,
+        };
       })
     },
+
     async getPic() {
-      const pics = await axios.get("http://localhost:3000/pics");
+      const pics = await axios.get(HOST + "pics/?format=json");
       this.optionsPic = pics.data.map((item) => {
-        return item.name;
+        return {
+          label: item.name,
+          value: item.id,
+        };
       });
-    onSubmit() 
+    },
+    onSubmit() {
       axios
-        .post("http://localhost:3000/projects", this.form)
+        .post(HOST + "assigntask/", {
+          project: this.form.projectName.value,
+          pic: this.form.pic.value,
+          note: this.form.note,
+        })
         .then(() => {
           this.form = "";
         })
         .catch((err) => {
           console.log(err);
         });
-    },
+    }
+
   },
   async mounted() {
-    this.getPic();
     this.getProject();
+    this.getPic();
   },
 });
 </script>

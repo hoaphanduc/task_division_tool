@@ -9,6 +9,14 @@ class AddtaskSerializer(serializers.ModelSerializer):
 class AssigntaskSerializer(serializers.ModelSerializer):
     class Meta:
         model=tasks
-        fields=('title','teamPic')
+        fields=('id','teamPic')
     
-   
+class ProjectsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=tasks
+        fields=('id', 'title','teamPic')
+
+class PicsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=users
+        fields=('id', 'name', 'role', 'team', 'request')
