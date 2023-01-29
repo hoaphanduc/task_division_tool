@@ -22,11 +22,11 @@ class AddtaskList(generics.ListCreateAPIView):
             serializer.save()
 
             return JsonResponse({
-                'message': 'Create a new Car successful!'
+                'message': 'Create a new Project successful!'
             }, status=status.HTTP_201_CREATED)
 
         return JsonResponse({
-            'message': 'Create a new Car unsuccessful!'
+            'message': 'Create a new Project unsuccessful!'
         }, status=status.HTTP_400_BAD_REQUEST)
 
 class AddtaskDetail(generics.RetrieveUpdateDestroyAPIView):

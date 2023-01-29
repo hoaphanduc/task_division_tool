@@ -91,7 +91,7 @@ export default defineComponent({
         note: "",
       },
       optionsStatus: [{
-        label: "On Progress",
+        label: "In Progress",
         value: 2,
       },
       {
