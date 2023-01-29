@@ -60,5 +60,5 @@ class PicsList(generics.ListCreateAPIView):
     serializer_class = PicsSerializer
 
     def get_queryset(self):
-        tasksList = tasks.objects.all()
-        return users.objects.exclude(id__in=tasksList.values('teamPic'))
+        tasksList = tasks.objects.values('teamPic').filter(teamPic__isnull=False)
+        return users.objects.filter(role=1).exclude(team__in=[i['teamPic'] for i in tasksList])
