@@ -71,7 +71,7 @@ export default defineComponent({
       const pics = await axios.get(HOST + "pics/?format=json");
       this.optionsPic = pics.data.map((item) => {
         return {
-          label: item.name,
+          label: item.account,
           value: item.id,
         };
       });

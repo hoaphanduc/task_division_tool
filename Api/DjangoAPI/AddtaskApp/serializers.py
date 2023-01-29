@@ -19,4 +19,4 @@ class ProjectsSerializer(serializers.ModelSerializer):
 class PicsSerializer(serializers.ModelSerializer):
     class Meta:
         model=users
-        fields=('id', 'name', 'role', 'team', 'request')
+        fields=('id', 'account', 'name', 'role', 'team', 'request')
