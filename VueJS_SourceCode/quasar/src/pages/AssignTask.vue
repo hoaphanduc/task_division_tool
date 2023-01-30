@@ -1,5 +1,8 @@
 <template>
     <q-page class="flex flex-center">
+      <q-form ref="myForm">
+  <!-- Your input field -->
+</q-form>
       <q-form @submit.prevent="onSubmit" class="rounded q-my-lg flex column">
         <q-select
           outlined
@@ -84,7 +87,7 @@ export default defineComponent({
           note: this.form.note,
         })
         .then(() => {
-          this.form = "";
+          this.form.value.reset();
         })
         .catch((err) => {
           console.log(err);
