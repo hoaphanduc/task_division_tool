@@ -45,7 +45,7 @@
         v-model="form.status"
         :options="optionsStatus"
         label="Status"
-        :rules="[(val) => (val.label && val.label.length > 0) || 'Start is required']"
+        :rules="[(val) => (val.label && val.label.length > 0) || 'Status is required']"
       />
       <q-input
         outlined
